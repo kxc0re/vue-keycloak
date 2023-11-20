@@ -2,9 +2,7 @@ import Keycloak from 'keycloak-js'
 import { hasFailed, isAuthenticated, isPending, setToken } from './state'
 import { isNil } from './utils'
 
-type KeycloakInstance = Keycloak.KeycloakInstance | undefined
-
-let $keycloak: KeycloakInstance = undefined
+let $keycloak: Keycloak = undefined
 
 export async function isTokenReady(): Promise<void> {
   return new Promise(resolve => checkToken(resolve))
@@ -18,8 +16,8 @@ const checkToken = (resolve: () => void) => {
   }
 }
 
-export function getKeycloak(): Keycloak.KeycloakInstance {
-  return $keycloak as Keycloak.KeycloakInstance
+export function getKeycloak(): Keycloak {
+  return $keycloak as Keycloak
 }
 
 export async function getToken(): Promise<string> {
@@ -53,8 +51,8 @@ export async function updateToken(): Promise<string> {
   return $keycloak.token
 }
 
-export function createKeycloak(config: Keycloak.KeycloakConfig | string): Keycloak.KeycloakInstance {
-  $keycloak = Keycloak(config)
+export function createKeycloak(config: Keycloak.KeycloakConfig | string): Keycloak {
+  $keycloak = new Keycloak(config)
   return getKeycloak()
 }
 
